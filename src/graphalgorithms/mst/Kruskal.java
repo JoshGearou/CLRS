@@ -6,16 +6,14 @@ import graphalgorithms.Graph;
 import graphalgorithms.Vertex;
 
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 
 
 public class Kruskal {
     HashMap<Vertex<String>, SetTree<Vertex<String>>> map = new HashMap<>();
 
     public Set<Edge<String>> findMST(Graph<String> graph) {
+        Set<Edge<String>> A = new HashSet<>();
         for (Vertex<String> v: graph.getVertices()) {
             SetTree<Vertex<String>> set = new SetTree<>(v);
             map.put(v, set);
@@ -26,11 +24,11 @@ public class Kruskal {
             SetTree.TreeNode<Vertex<String>> srcTree = map.get(e.getSrc()).getRoot();
             SetTree.TreeNode<Vertex<String>> destTree = map.get(e.getDest()).getRoot();
             if (new SetTree<Vertex<String>>().findSet(srcTree) != new SetTree<Vertex<String>>().findSet(destTree)) {
-                graph.getA().add(e);
+                A.add(e);
                 new SetTree<Vertex<String>>().union(srcTree, destTree);
             }
         });
-        return graph.getA();
+        return A;
     }
 
     public static void main(String[] args) {
@@ -44,20 +42,20 @@ public class Kruskal {
         g.addVertex("g");
         g.addVertex("h");
         g.addVertex("i");
-        g.addEdge("a", "b", 4);
-        g.addEdge("a", "h", 8);
-        g.addEdge("b", "c", 8);
-        g.addEdge("b", "h", 11);
-        g.addEdge("c", "d", 7);
-        g.addEdge("c", "i", 2);
-        g.addEdge("c", "f", 4);
-        g.addEdge("d", "e", 9);
-        g.addEdge("d", "f", 14);
-        g.addEdge("e", "f", 10);
-        g.addEdge("f", "g", 2);
-        g.addEdge("g", "i", 6);
-        g.addEdge("g", "h", 1);
-        g.addEdge("h", "i", 7);
+        g.addUndirectedEdge("a", "b", 4);
+        g.addUndirectedEdge("a", "h", 8);
+        g.addUndirectedEdge("b", "c", 8);
+        g.addUndirectedEdge("b", "h", 11);
+        g.addUndirectedEdge("c", "d", 7);
+        g.addUndirectedEdge("c", "i", 2);
+        g.addUndirectedEdge("c", "f", 4);
+        g.addUndirectedEdge("d", "e", 9);
+        g.addUndirectedEdge("d", "f", 14);
+        g.addUndirectedEdge("e", "f", 10);
+        g.addUndirectedEdge("f", "g", 2);
+        g.addUndirectedEdge("g", "i", 6);
+        g.addUndirectedEdge("g", "h", 1);
+        g.addUndirectedEdge("h", "i", 7);
 
         Set<Edge<String>> mstEdges = new Kruskal().findMST(g);
         for (Edge<String> e: mstEdges) {

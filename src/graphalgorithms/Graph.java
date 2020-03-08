@@ -1,44 +1,51 @@
 package graphalgorithms;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Graph<E> {
-    int numVertices;
     List<Vertex<E>> vertices;
     List<Edge<E>> edges;
-    Set<Edge<E>> A;
 
 
     public Graph(int numVertices) {
-        this.numVertices = numVertices;
         vertices = new ArrayList<>(numVertices);
         edges = new ArrayList<>();
-        A = new HashSet<>();
     }
 
-    public Set<Edge<E>> getA() {
-        return A;
+    public void addDirectedEdge(E src, E dest, int weight) {
+        addDirectedEdge(addVertex(src), addVertex(dest), weight);
     }
 
-    public void addEdge(E src, E dest, int weight) {
-        addEdge(addVertex(src), addVertex(dest), weight);
+    public void addUndirectedEdge(E src, E dest, int weight) {
+        addUndirectedEdge(addVertex(src), addVertex(dest), weight);
     }
 
-    public void addEdge(Vertex<E> src, Vertex<E> dest, int weight) {
+    public void addDirectedEdge(Vertex<E> src, Vertex<E> dest, int weight) {
         Edge<E> e = new Edge<>(src, dest, weight);
         if (newEdge(e)) {
             edges.add(e);
-            src.getEdges().add(e);
-            dest.getEdges().add(e);
+            src.getAdjList().add(new Node<E>(dest, weight));
+        }
+    }
+
+    public void addUndirectedEdge(Vertex<E> src, Vertex<E> dest, int weight) {
+        Edge<E> e1 = new Edge<>(src, dest, weight);
+        Edge<E> e2 = new Edge<>(dest, src, weight);
+        if (newEdge(e1)) {
+            edges.add(e1);
+            src.getAdjList().add(new Node<E>(dest, weight));
+        }
+
+        if (newEdge(e2)) {
+            edges.add(e2);
+            dest.getAdjList().add(new Node<E>(src, weight));
         }
     }
 
     public boolean newEdge(Edge<E> e) {
         for (Edge<E> edge : edges) {
-            if ((edge.src == e.src && edge.dest == e.dest) || (edge.dest == e.src && edge.src == e.dest)) {
+            if ((edge.src == e.src && edge.dest == e.dest)) {
                 return false;
             }
         }
