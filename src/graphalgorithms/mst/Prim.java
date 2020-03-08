@@ -19,15 +19,13 @@ public class Prim {
         while (!pq.isEmpty()) {
             Vertex<String> u = pq.poll();
             A.add(new Pair<>(u, u.getParent()));
-            for (Node<String> node: u.getAdjList()) {
+            for (Node<String> node : u.getAdjList()) {
                 Vertex<String> v = node.getVertex();
                 if (pq.contains(v) && node.getWeight() < v.getKey()) {
                     v.setParent(u);
                     v.setKey(node.getWeight());
-                    if (pq.contains(v)) {
-                        pq.remove(v);
-                        pq.add(v);
-                    }
+                    pq.remove(v);
+                    pq.add(v);
                 }
             }
 
