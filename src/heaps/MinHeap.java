@@ -1,7 +1,5 @@
 package heaps;
 
-import org.w3c.dom.xpath.XPathResult;
-
 import java.util.ArrayList;
 
 public class MinHeap {
