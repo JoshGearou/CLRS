@@ -5,8 +5,11 @@ import java.util.Set;
 
 public class Vertex<T> {
     private T val;
-    private int d; // for shortest-paths algorithms
-    private int key; // for prim's algorithm
+    // For prim's algorithm: the minimum weight of any edge connecting a vertex v
+    // to another vertex in the tree
+    //
+    // For shortest path algorithms: An upper bound on the weight of a shortest path from source s to v
+    private int key;
     private Vertex<T> parent; // for prim's algorithm
     private Set<Node<T>> adjList;
 
@@ -38,13 +41,6 @@ public class Vertex<T> {
     public void setParent(Vertex<T> parent) {
         this.parent = parent;
     }
-
-    public int getD() {
-        return d;
-    }
-
-    public void setD(int d) {
-        this.d = d;
-    }
+    
 }
 

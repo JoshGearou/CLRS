@@ -41,7 +41,7 @@ public class DagShortestPath {
         g.addDirectedEdge("y", "z", -2);
         dagShortestPath(g, g.getVertices().get(1));
         for (Vertex<String> v: g.getVertices()) {
-            System.out.println(v.getD());
+            System.out.println(v.getKey());
         }
     }
 }

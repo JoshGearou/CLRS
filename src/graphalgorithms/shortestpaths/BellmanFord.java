@@ -17,7 +17,7 @@ public class BellmanFord {
         for (Edge<String> edge: g.getEdges()) {
             Vertex<String> u = edge.getSrc();
             Vertex<String> v = edge.getDest();
-            if (v.getD() > u.getD() + edge.getWeight()) {
+            if (v.getKey() > u.getKey() + edge.getWeight()) {
                 return false;
             }
         }
@@ -43,7 +43,7 @@ public class BellmanFord {
         boolean bell = bellmanFord(g, g.getVertices().get(0));
         System.out.println(bell);
         for (Vertex<String> v: g.getVertices()) {
-            System.out.println(v.getVal() + ": " + v.getD());
+            System.out.println(v.getVal() + ": " + v.getKey());
         }
 
     }

@@ -9,23 +9,23 @@ public class Relaxation {
     public static void initializeSingleSource(Graph<String> g, Vertex<String> s) {
         g.getVertices().forEach(v -> {
             v.setParent(null);
-            v.setD(Integer.MAX_VALUE);
+            v.setKey(Integer.MAX_VALUE);
         });
-        s.setD(0);
+        s.setKey(0);
     }
 
     public static void relax(Edge<String> edge) {
         Vertex<String> u = edge.getSrc();
         Vertex<String> v = edge.getDest();
-        if (v.getD() > (long) u.getD() + edge.getWeight()) {
-            v.setD(u.getD() + edge.getWeight());
+        if (v.getKey() > (long) u.getKey() + edge.getWeight()) {
+            v.setKey(u.getKey() + edge.getWeight());
             v.setParent(u);
         }
     }
 
     public static void relax(Vertex<String> u, Vertex<String> v, int weight) {
-        if (v.getD() > (long) u.getD() + weight) {
-            v.setD(u.getD() + weight);
+        if (v.getKey() > (long) u.getKey() + weight) {
+            v.setKey(u.getKey() + weight);
             v.setParent(u);
         }
     }

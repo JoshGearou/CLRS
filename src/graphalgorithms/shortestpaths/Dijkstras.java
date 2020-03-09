@@ -3,7 +3,7 @@ package graphalgorithms.shortestpaths;
 import graphalgorithms.Graph;
 import graphalgorithms.Node;
 import graphalgorithms.Vertex;
-import graphalgorithms.VertexDComparator;
+import graphalgorithms.VertexKeyComparator;
 
 import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -14,7 +14,7 @@ public class Dijkstras {
     public static void dijkstras(Graph<String> g, Vertex<String> s) {
         Relaxation.initializeSingleSource(g, s);
         Set<Vertex<String>> A = new HashSet<>();
-        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(g.getVertices().size(), new VertexDComparator());
+        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(g.getVertices().size(), new VertexKeyComparator());
         pq.addAll(g.getVertices());
         while (!pq.isEmpty()) {
             Vertex<String> u = pq.poll();
@@ -49,7 +49,7 @@ public class Dijkstras {
         graph.addDirectedEdge("z", "x", 6);
         dijkstras(graph, graph.getVertices().get(0));
         for (Vertex<String> v: graph.getVertices()) {
-            System.out.println(v.getD());
+            System.out.println(v.getKey());
         }
     }
 }
