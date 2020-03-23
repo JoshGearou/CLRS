@@ -1,4 +1,8 @@
-package graphalgorithms;
+package graphalgorithms.traversals;
+
+import graphalgorithms.Graph;
+import graphalgorithms.Node;
+import graphalgorithms.Vertex;
 
 import java.util.HashSet;
 import java.util.Set;

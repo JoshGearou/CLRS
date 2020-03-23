@@ -2,7 +2,7 @@ package graphalgorithms.shortestpaths;
 
 import graphalgorithms.Graph;
 import graphalgorithms.Node;
-import graphalgorithms.TopologicalSort;
+import graphalgorithms.traversals.TopologicalSort;
 import graphalgorithms.Vertex;
 
 import java.util.Stack;

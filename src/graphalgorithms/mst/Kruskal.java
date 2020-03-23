@@ -1,6 +1,7 @@
 package graphalgorithms.mst;
 
 import disjointsets.SetTree;
+import disjointsets.SetTree.TreeNode;
 import graphalgorithms.Edge;
 import graphalgorithms.Graph;
 import graphalgorithms.Vertex;
@@ -21,8 +22,8 @@ public class Kruskal {
 
         Collections.sort(graph.getEdges(), Comparator.comparingInt(Edge::getWeight));
         graph.getEdges().forEach(e -> {
-            SetTree.TreeNode<Vertex<String>> srcTree = map.get(e.getSrc()).getRoot();
-            SetTree.TreeNode<Vertex<String>> destTree = map.get(e.getDest()).getRoot();
+            TreeNode<Vertex<String>> srcTree = map.get(e.getSrc()).getRoot();
+            TreeNode<Vertex<String>> destTree = map.get(e.getDest()).getRoot();
             if (new SetTree<Vertex<String>>().findSet(srcTree) != new SetTree<Vertex<String>>().findSet(destTree)) {
                 A.add(e);
                 new SetTree<Vertex<String>>().union(srcTree, destTree);
