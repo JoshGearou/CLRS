@@ -26,19 +26,19 @@ public class MinHeap {
     private void minHeapify(int i) {
         int left = left(i);
         int right = right(i);
-        int largest = i;
+        int smallest = i;
 
         if (left <=size && heap.get(left) < heap.get(i)) {
-            largest = left;
+            smallest = left;
         }
 
         if (right <= size && heap.get(right) < heap.get(i)) {
-            largest = right;
+            smallest = right;
         }
 
-        if (largest != i) {
-            swap(i, largest);
-            minHeapify(largest);
+        if (smallest != i) {
+            swap(i, smallest);
+            minHeapify(smallest);
         }
     }
 
