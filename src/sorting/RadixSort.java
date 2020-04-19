@@ -4,11 +4,12 @@ public class RadixSort {
 
     private int getMax(int[] data) {
         int max = 0;
-        for (int i=0; i<data.length; i++) {
+        for (int i = 0; i < data.length; i++) {
             max = Math.max(data[i], max);
         }
         return max;
     }
+
     private void radixSort(int[] data) {
         int max = getMax(data);
         for (int exp=1; max/exp>0; exp*=10) {

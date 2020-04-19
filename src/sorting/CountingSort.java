@@ -1,5 +1,7 @@
 package sorting;
 
+import java.util.Arrays;
+
 // Use counting sort if k=O(n), which means the sort is also O(n).
 public class CountingSort {
     private void countingSort1(int[] data, int k) {
@@ -24,20 +26,29 @@ public class CountingSort {
     private void countingSort(int[] data, int k) {
         int[] temp = new int[k+1];
         int[] sorted = new int[data.length];
+        // Stores the count of each number.
         for (int i: data) {
             temp[i]++;
         }
-        // now temp[i] contains the number of elements equal to i.
+
+        // Makes it so temp[i] contains the number of elements less than or equals to temp[i].
         for (int i=1; i<temp.length; i++) {
             temp[i] = temp[i] + temp[i-1];
         }
-        // now temp[i] contains the number of elements less than or equals to i.
+        // Place each element into its correct position in the list.
         for (int i=data.length-1; i>=0; i--) {
             sorted[temp[data[i]]-1] = data[i];
             temp[data[i]]--;
         }
-        for (int i=0; i<sorted.length; i++) {
-            data[i] = sorted[i];
+
+        System.arraycopy(sorted, 0, data, 0, data.length);
+    }
+
+    public static void main(String[] args) {
+        int[] data = {2,3,1,2,4,3,6};
+        new CountingSort().countingSort(data, 6);
+        for (int i: data) {
+            System.out.println(i);
         }
     }
 }
