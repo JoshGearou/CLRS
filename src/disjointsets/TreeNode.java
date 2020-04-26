@@ -1,56 +1,40 @@
 package disjointsets;
 
-public class SetTree<E> {
-    TreeNode<E> root;
+public class TreeNode<E> {
+    E val;
+    int rank; // An upper bound on the height of the node
+    TreeNode<E> parent;
 
-    public SetTree() {
+    public TreeNode(E val) {
+        this.val = val;
+        makeSet(this);
 
-    }
-
-    public SetTree(E val) {
-        TreeNode<E> temp = new TreeNode<>(val);
-        makeSet(temp);
-    }
-
-    public TreeNode<E> getRoot() {
-        return root; // The representative element of each disjoint set.
-    }
-
-    public static class TreeNode<E> {
-        E val;
-        int rank; // An upper bound on the height of the node
-        TreeNode<E> parent;
-
-        public TreeNode(E val) {
-            this.val = val;
-            rank = 0;
-        }
     }
 
     /**
      * Creates a set with one element, x
+     *
      * @param x Element to add to empty set
      * @return {x}
      */
-    public SetTree<E> makeSet(TreeNode<E> x) {
+    public TreeNode<E> makeSet(TreeNode<E> x) {
         x.parent = x;
         x.rank = 0;
-        this.root = x;
-        return this;
+        return x;
     }
 
     /**
      * Combines two disjoint sets into one (note this method assumes the sets are disjoint)
+     *
      * @param x first set
      * @param y second set
      * @return new set
      */
-    public static <E> void union(TreeNode<E> x, TreeNode<E> y) {
-        link(findSet(x), findSet(y));
+    public static <E> TreeNode<E> union(TreeNode<E> x, TreeNode<E> y) {
+        return link(findSet(x), findSet(y));
     }
 
     /**
-     *
      * @param x finds the representative element of the set that x belongs to (if it exists)
      * @return representative element
      */
@@ -63,6 +47,7 @@ public class SetTree<E> {
 
     /**
      * Helper method for #union to combine two disjoint sets
+     *
      * @param x first set
      * @param y second set
      * @return root of new set
@@ -78,12 +63,5 @@ public class SetTree<E> {
             }
             return y;
         }
-    }
-
-    public static void main(String[] args) {
-        SetTree<Integer> set1 = new SetTree<>(1);
-        SetTree<Integer> set2 = new SetTree<>(2);
-        union(set1.getRoot(), set2.getRoot());
-        System.out.println(findSet(set1.getRoot()) == findSet(set2.getRoot()));
     }
 }

@@ -1,7 +1,6 @@
 package graphalgorithms.mst;
 
-import disjointsets.SetTree;
-import disjointsets.SetTree.TreeNode;
+import disjointsets.TreeNode;
 import graphalgorithms.Edge;
 import graphalgorithms.Graph;
 import graphalgorithms.Vertex;
@@ -9,24 +8,24 @@ import graphalgorithms.Vertex;
 
 import java.util.*;
 
-import static disjointsets.SetTree.findSet;
-import static disjointsets.SetTree.union;
+import static disjointsets.TreeNode.findSet;
+import static disjointsets.TreeNode.union;
 
 
 public class Kruskal {
-    HashMap<Vertex<String>, SetTree<Vertex<String>>> map = new HashMap<>();
+    HashMap<Vertex<String>, TreeNode<Vertex<String>>> map = new HashMap<>();
 
     public Set<Edge<String>> findMST(Graph<String> graph) {
         Set<Edge<String>> A = new HashSet<>();
         for (Vertex<String> v: graph.getVertices()) {
-            SetTree<Vertex<String>> set = new SetTree<>(v);
+            TreeNode<Vertex<String>> set = new TreeNode<>(v);
             map.put(v, set);
         }
 
         Collections.sort(graph.getEdges(), Comparator.comparingInt(Edge::getWeight));
         graph.getEdges().forEach(e -> {
-            TreeNode<Vertex<String>> srcTree = map.get(e.getSrc()).getRoot();
-            TreeNode<Vertex<String>> destTree = map.get(e.getDest()).getRoot();
+            TreeNode<Vertex<String>> srcTree = map.get(e.getSrc());
+            TreeNode<Vertex<String>> destTree = map.get(e.getDest());
             if (findSet(srcTree) != findSet(destTree)) {
                 A.add(e);
                 union(srcTree, destTree);
