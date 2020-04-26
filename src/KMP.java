@@ -1,58 +1,57 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class KMP {
-    int count = 0;
 
-    public int KMPSearch(String str, String pattern) {
-        int n = str.length();
-        int m = pattern.length();
-        int [] lps = new int[m];
-        createLps(pattern, lps);
-        System.out.println("j: " + Arrays.toString(lps));
+    public List<Integer> KMPSearch(String str, String pattern) {
+        List<Integer> indices = new ArrayList<>();
+        if (pattern.isEmpty()) {
+            return indices;
+        }
+        int[] lps = createLps(pattern);
         int i = 0;
         int j = 0;
-        while (i < n) {
+        while (i < str.length() && j < lps.length) {
             if (str.charAt(i) == pattern.charAt(j)) {
                 i++;
                 j++;
-            }
-            else {
-                if (j != 0) {
-                    j = lps[j-1];
-                }
-                else {
+            } else {
+                if (j == 0) {
                     i++;
+                } else {
+                    j = lps[j - 1];
                 }
             }
 
-            if (j == m) {
-                System.out.println("starting index: " + (i - j));
-                count++;
-                j = lps[j-1];
+            if (j == lps.length) {
+                indices.add(i - lps.length);
+                j = lps[j - 1];
+
             }
         }
-        return count;
+        return indices;
     }
 
-    public void createLps(String pattern, int [] lps) {
-        int len = 0;
+    public int[] createLps(String pattern) {
+        char[] pat = pattern.toCharArray();
+        int[] lps = new int[pat.length];
+
         int i = 1;
-        lps[0] = 0;
-        while (i < pattern.length()) {
-            if (pattern.charAt(i) == pattern.charAt(len)) {
-                lps[i] = len + 1;
+        int len = 0;
+        while (i < pat.length) {
+            if (pat[i] == pat[len]) {
                 len++;
+                lps[i] = len;
                 i++;
-            }
-            else {
-                if (len != 0) {
-                    len = lps[len-1];
-                }
-                else {
+            } else {
+                if (len == 0) {
                     lps[i] = 0;
                     i++;
+                } else {
+                    len = lps[len - 1];
                 }
             }
         }
+        return lps;
     }
 }
