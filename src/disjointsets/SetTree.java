@@ -45,9 +45,8 @@ public class SetTree<E> {
      * @param y second set
      * @return new set
      */
-    public SetTree<E> union(TreeNode<E> x, TreeNode<E> y) {
-        this.root = link(findSet(x), findSet(y));
-        return this;
+    public static <E> void union(TreeNode<E> x, TreeNode<E> y) {
+        link(findSet(x), findSet(y));
     }
 
     /**
@@ -55,7 +54,7 @@ public class SetTree<E> {
      * @param x finds the representative element of the set that x belongs to (if it exists)
      * @return representative element
      */
-    public TreeNode<E> findSet(TreeNode<E> x) {
+    public static <E> TreeNode<E> findSet(TreeNode<E> x) {
         if (x.parent != x) {
             x.parent = findSet(x.parent);
         }
@@ -68,7 +67,7 @@ public class SetTree<E> {
      * @param y second set
      * @return root of new set
      */
-    public TreeNode<E> link(TreeNode<E> x, TreeNode<E> y) {
+    public static <E> TreeNode<E> link(TreeNode<E> x, TreeNode<E> y) {
         if (x.rank > y.rank) {
             y.parent = x;
             return x;
@@ -84,7 +83,7 @@ public class SetTree<E> {
     public static void main(String[] args) {
         SetTree<Integer> set1 = new SetTree<>(1);
         SetTree<Integer> set2 = new SetTree<>(2);
-        new SetTree<Integer>().union(set1.getRoot(), set2.getRoot());
-        System.out.println(new SetTree<Integer>().findSet(set1.getRoot()) == new SetTree<Integer>().findSet(set2.getRoot()));
+        union(set1.getRoot(), set2.getRoot());
+        System.out.println(findSet(set1.getRoot()) == findSet(set2.getRoot()));
     }
 }

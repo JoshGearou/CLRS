@@ -9,6 +9,9 @@ import graphalgorithms.Vertex;
 
 import java.util.*;
 
+import static disjointsets.SetTree.findSet;
+import static disjointsets.SetTree.union;
+
 
 public class Kruskal {
     HashMap<Vertex<String>, SetTree<Vertex<String>>> map = new HashMap<>();
@@ -24,9 +27,9 @@ public class Kruskal {
         graph.getEdges().forEach(e -> {
             TreeNode<Vertex<String>> srcTree = map.get(e.getSrc()).getRoot();
             TreeNode<Vertex<String>> destTree = map.get(e.getDest()).getRoot();
-            if (new SetTree<Vertex<String>>().findSet(srcTree) != new SetTree<Vertex<String>>().findSet(destTree)) {
+            if (findSet(srcTree) != findSet(destTree)) {
                 A.add(e);
-                new SetTree<Vertex<String>>().union(srcTree, destTree);
+                union(srcTree, destTree);
             }
         });
         return A;
