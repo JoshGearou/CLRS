@@ -6,15 +6,15 @@ import graphalgorithms.Vertex;
 
 public class BellmanFord {
 
-    public static boolean bellmanFord(Graph<String> g, Vertex<String> s) {
-        Relaxation.initializeSingleSource(g, s);
-        for (int i=0; i<g.getVertices().size(); i++) {
-            for (Edge<String> edge: g.getEdges()) {
-                Relaxation.relax(edge);
+    public static boolean bellmanFord(Graph<String> graph, Vertex<String> s) {
+        Relaxation.initializeSingleSource(graph, s);
+        for (int i=0; i<graph.getNumberVertices(); i++) {
+            for (Edge<String> edge: graph.getEdges()) {
+                Relaxation.relax(edge.getSrc(), edge.getDest(), edge.getWeight());
             }
         }
 
-        for (Edge<String> edge: g.getEdges()) {
+        for (Edge<String> edge: graph.getEdges()) {
             Vertex<String> u = edge.getSrc();
             Vertex<String> v = edge.getDest();
             if (v.getKey() > u.getKey() + edge.getWeight()) {
@@ -25,12 +25,7 @@ public class BellmanFord {
     }
 
     public static void main(String[] args) {
-        Graph<String> g = new Graph<>(5);
-        g.addVertex("s");
-        g.addVertex("t");
-        g.addVertex("x");
-        g.addVertex("y");
-        g.addVertex("z");
+        Graph<String> g = new Graph<>();
         g.addDirectedEdge("s", "t", 6);
         g.addDirectedEdge("s", "y", 7);
         g.addDirectedEdge("t", "x", 5);

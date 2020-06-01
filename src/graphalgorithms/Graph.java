@@ -1,68 +1,78 @@
 package graphalgorithms;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Graph<E> {
-    List<Vertex<E>> vertices;
+    HashMap<Vertex<E>, List<Node<E>>> adjList;
+    HashMap<E, Vertex<E>> valToVertex;
     List<Edge<E>> edges;
+    List<Vertex<E>> vertices;
 
-
-    public Graph(int numVertices) {
-        vertices = new ArrayList<>(numVertices);
+    public Graph() {
+        adjList = new HashMap<>();
+        valToVertex = new HashMap<>();
         edges = new ArrayList<>();
+        vertices = new ArrayList<>();
     }
 
     public void addDirectedEdge(E src, E dest, int weight) {
-        addDirectedEdge(addVertex(src), addVertex(dest), weight);
-    }
-
-    public void addUndirectedEdge(E src, E dest, int weight) {
-        addUndirectedEdge(addVertex(src), addVertex(dest), weight);
+        Vertex<E> u = getVertex(src);
+        Vertex<E> v = getVertex(dest);
+        Edge<E> e = new Edge<>(u, v, weight);
+        if (!edges.contains(e)) {
+            addEdge(e);
+        }
     }
 
     public void addDirectedEdge(Vertex<E> src, Vertex<E> dest, int weight) {
         Edge<E> e = new Edge<>(src, dest, weight);
-        if (newEdge(e)) {
-            edges.add(e);
-            src.getAdjList().add(new Node<E>(dest, weight));
+        if (!edges.contains(e)) {
+            addEdge(e);
         }
     }
 
-    public void addUndirectedEdge(Vertex<E> src, Vertex<E> dest, int weight) {
-        Edge<E> e1 = new Edge<>(src, dest, weight);
-        Edge<E> e2 = new Edge<>(dest, src, weight);
-        if (newEdge(e1)) {
-            edges.add(e1);
-            src.getAdjList().add(new Node<E>(dest, weight));
-        }
-
-        if (newEdge(e2)) {
-            edges.add(e2);
-            dest.getAdjList().add(new Node<E>(src, weight));
+    public Vertex<E> getVertex(E src) {
+        if (valToVertex.containsKey(src)) {
+            return valToVertex.get(src);
+        } else {
+            valToVertex.put(src, new Vertex<>(src));
+            return valToVertex.get(src);
         }
     }
 
-    public boolean newEdge(Edge<E> e) {
-        for (Edge<E> edge : edges) {
-            if ((edge.src == e.src && edge.dest == e.dest)) {
-                return false;
-            }
+    public void addEdge(Edge<E> edge) {
+        edges.add(edge);
+        Vertex<E> u = edge.getSrc();
+        Vertex<E> v = edge.getDest();
+        if (!adjList.containsKey(u)) {
+            vertices.add(u);
+            List<Node<E>> neighbors = new ArrayList<>();
+            neighbors.add(new Node<>(v, edge.getWeight()));
+            adjList.put(u, neighbors);
+        } else {
+            adjList.get(u).add(new Node<>(v, edge.getWeight()));
         }
-        return true;
+
+        if (!adjList.containsKey(v)) {
+            vertices.add(v);
+            adjList.put(v, new ArrayList<>());
+        }
     }
 
-    public Vertex<E> addVertex(E val) {
-        Vertex<E> v;
-        for (Vertex<E> vert : vertices) {
-            if (vert.getVal().equals(val)) {
-                v = vert;
-                return v;
-            }
+    public void addUndirectedEdge(E src, E dest, int weight) {
+        Vertex<E> u = getVertex(src);
+        Vertex<E> v = getVertex(dest);
+        Edge<E> e1 = new Edge<>(u, v, weight);
+        Edge<E> e2 = new Edge<>(v, u, weight);
+        if (!edges.contains(e1)) {
+            addEdge(e1);
         }
-        Vertex<E> vertex = new Vertex<>(val);
-        vertices.add(vertex);
-        return vertex;
+
+        if (!edges.contains(e2)) {
+            addEdge(e2);
+        }
     }
 
     public List<Vertex<E>> getVertices() {
@@ -71,6 +81,28 @@ public class Graph<E> {
 
     public List<Edge<E>> getEdges() {
         return edges;
+    }
+
+    public List<Edge<E>> getUndirectedEdges() {
+        List<Edge<E>> edges = new ArrayList<>();
+        for (Vertex<E> u : adjList.keySet()) {
+            for (Node<E> n : adjList.get(u)) {
+                Vertex<E> v = n.getVertex();
+                if (edges.contains(new Edge<>(v.getVal(), u.getVal(), n.getWeight()))) {
+                    continue;
+                }
+                edges.add(new Edge<>(u.getVal(), v.getVal(), n.getWeight()));
+            }
+        }
+        return edges;
+    }
+
+    public HashMap<Vertex<E>, List<Node<E>>> getAdjList() {
+        return adjList;
+    }
+
+    public int getNumberVertices() {
+        return adjList.size();
     }
 }
 

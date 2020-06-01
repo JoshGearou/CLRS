@@ -10,26 +10,26 @@ import java.util.Stack;
 
 public class TopologicalSort {
 
-    public static Stack<Vertex<String>> topologicalSort(Graph<String> g) {
+    public static Stack<Vertex<String>> topologicalSort(Graph<String> graph) {
         Stack<Vertex<String>> stack  = new Stack<>();
         Set<Vertex<String>> seen = new HashSet<>();
-        for (Vertex<String> v: g.getVertices()) {
+        for (Vertex<String> v: graph.getVertices()) {
             if (!seen.contains(v)) {
-                topologicalSort(v, stack, seen);
+                topologicalSort(graph, v, stack, seen);
             }
         }
         return stack;
     }
 
-    public static void topologicalSort(Vertex<String> v, Stack<Vertex<String>> stack, Set<Vertex<String>> seen) {
-        seen.add(v);
+    public static void topologicalSort(Graph<String> graph, Vertex<String> u, Stack<Vertex<String>> stack, Set<Vertex<String>> seen) {
+        seen.add(u);
 
-        for (Node<String> node: v.getAdjList()) {
+        for (Node<String> node: graph.getAdjList().get(u)) {
             Vertex<String> neighbor = node.getVertex();
             if (!seen.contains(neighbor)) {
-                topologicalSort(neighbor, stack, seen);
+                topologicalSort(graph, neighbor, stack, seen);
             }
         }
-        stack.push(v);
+        stack.push(u);
     }
 }

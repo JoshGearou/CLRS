@@ -9,34 +9,34 @@ import java.util.Stack;
 
 public class DFS {
 
-    public void dfs(Graph<String> g) {
+    public void dfs(Graph<String> graph) {
         HashSet<Vertex<String>> visited = new HashSet<>();
-        for (Vertex<String> v : g.getVertices()) {
+        for (Vertex<String> v : graph.getVertices()) {
             if (!visited.contains(v)) {
-                dfs(v, visited);
+                dfs(graph, v, visited);
             }
         }
     }
 
-    public void dfs(Vertex<String> v, HashSet<Vertex<String>> visited) {
+    public void dfs(Graph<String> graph, Vertex<String> v, HashSet<Vertex<String>> visited) {
         visited.add(v);
         System.out.println(v.getVal());
-        for (Node<String> node : v.getAdjList()) {
+        for (Node<String> node : graph.getAdjList().get(v)) {
             if (!visited.contains(node.getVertex())) {
-                dfs(node.getVertex(), visited);
+                dfs(graph, node.getVertex(), visited);
             }
         }
     }
 
-    public void dfsWithStack(Graph<String> g) {
+    public void dfsWithStack(Graph<String> graph) {
         HashSet<Vertex<String>> visited = new HashSet<>();
         Stack<Vertex<String>> stack = new Stack<>();
-        stack.push(g.getVertices().get(0));
-        visited.add(g.getVertices().get(0));
+        stack.push(graph.getVertices().get(0));
+        visited.add(graph.getVertices().get(0));
         while (!stack.isEmpty()) {
             Vertex<String> vertex = stack.pop();
             System.out.println(vertex.getVal());
-            for (Node<String> node : vertex.getAdjList()) {
+            for (Node<String> node : graph.getAdjList().get(vertex)) {
                 if (!visited.contains(node.getVertex())) {
                     visited.add(node.getVertex());
                     stack.push(node.getVertex());
@@ -46,12 +46,7 @@ public class DFS {
     }
 
     public static void main(String[] args) {
-        Graph<String> graph = new Graph<>(5);
-        graph.addVertex("s");
-        graph.addVertex("t");
-        graph.addVertex("x");
-        graph.addVertex("y");
-        graph.addVertex("z");
+        Graph<String> graph = new Graph<>();
         graph.addDirectedEdge("s", "t", 10);
         graph.addDirectedEdge("s", "y", 5);
         graph.addDirectedEdge("t", "x", 1);

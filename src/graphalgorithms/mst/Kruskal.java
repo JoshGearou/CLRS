@@ -22,8 +22,9 @@ public class Kruskal {
             map.put(v, set);
         }
 
-        Collections.sort(graph.getEdges(), Comparator.comparingInt(Edge::getWeight));
-        graph.getEdges().forEach(e -> {
+        List<Edge<String>> edges = graph.getUndirectedEdges();
+        Collections.sort(edges, Comparator.comparingInt(Edge::getWeight));
+        edges.forEach(e -> {
             TreeNode<Vertex<String>> srcTree = map.get(e.getSrc());
             TreeNode<Vertex<String>> destTree = map.get(e.getDest());
             if (findSet(srcTree) != findSet(destTree)) {
@@ -35,16 +36,7 @@ public class Kruskal {
     }
 
     public static void main(String[] args) {
-        Graph<String> g = new Graph<>(9);
-        g.addVertex("a");
-        g.addVertex("b");
-        g.addVertex("c");
-        g.addVertex("d");
-        g.addVertex("e");
-        g.addVertex("f");
-        g.addVertex("g");
-        g.addVertex("h");
-        g.addVertex("i");
+        Graph<String> g = new Graph<>();
         g.addUndirectedEdge("a", "b", 4);
         g.addUndirectedEdge("a", "h", 8);
         g.addUndirectedEdge("b", "c", 8);

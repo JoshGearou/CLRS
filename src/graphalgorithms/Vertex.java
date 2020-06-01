@@ -1,7 +1,6 @@
 package graphalgorithms;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 public class Vertex<T> {
     private T val;
@@ -11,15 +10,9 @@ public class Vertex<T> {
     // For shortest path algorithms: An upper bound on the weight of a shortest path from source s to v
     private int key;
     private Vertex<T> parent; // for prim's algorithm
-    private Set<Node<T>> adjList;
 
     public Vertex(T val) {
         this.val = val;
-        adjList = new HashSet<>();
-    }
-
-    public Set<Node<T>> getAdjList() {
-        return adjList;
     }
 
     public T getVal() {
@@ -41,6 +34,16 @@ public class Vertex<T> {
     public void setParent(Vertex<T> parent) {
         this.parent = parent;
     }
-    
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(val);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Vertex<T> vertex = (Vertex<T>) obj;
+        return this.getVal().equals(vertex.getVal());
+    }
 }
 

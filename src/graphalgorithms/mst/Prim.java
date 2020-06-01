@@ -14,12 +14,12 @@ public class Prim {
             e.setKey(Integer.MAX_VALUE);
         });
         r.setKey(0);
-        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(graph.getVertices().size(), new VertexKeyComparator());
+        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(graph.getNumberVertices(), new VertexKeyComparator());
         pq.addAll(graph.getVertices());
         while (!pq.isEmpty()) {
             Vertex<String> u = pq.poll();
             A.add(new Pair<>(u, u.getParent()));
-            for (Node<String> node : u.getAdjList()) {
+            for (Node<String> node : graph.getAdjList().get(u)) {
                 Vertex<String> v = node.getVertex();
                 if (pq.contains(v) && node.getWeight() < v.getKey()) {
                     v.setParent(u);
@@ -35,16 +35,7 @@ public class Prim {
     }
 
     public static void main(String[] args) {
-        Graph<String> g = new Graph<>(9);
-        g.addVertex("a");
-        g.addVertex("b");
-        g.addVertex("c");
-        g.addVertex("d");
-        g.addVertex("e");
-        g.addVertex("f");
-        g.addVertex("g");
-        g.addVertex("h");
-        g.addVertex("i");
+        Graph<String> g = new Graph<>();
         g.addUndirectedEdge("a", "b", 4);
         g.addUndirectedEdge("a", "h", 8);
         g.addUndirectedEdge("b", "c", 8);

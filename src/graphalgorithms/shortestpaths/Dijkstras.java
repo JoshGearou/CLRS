@@ -11,15 +11,15 @@ import java.util.Set;
 
 public class Dijkstras {
 
-    public static void dijkstras(Graph<String> g, Vertex<String> s) {
-        Relaxation.initializeSingleSource(g, s);
+    public static void dijkstras(Graph<String> graph, Vertex<String> s) {
+        Relaxation.initializeSingleSource(graph, s);
         Set<Vertex<String>> A = new HashSet<>();
-        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(g.getVertices().size(), new VertexKeyComparator());
-        pq.addAll(g.getVertices());
+        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(graph.getNumberVertices(), new VertexKeyComparator());
+        pq.addAll(graph.getVertices());
         while (!pq.isEmpty()) {
             Vertex<String> u = pq.poll();
             A.add(u);
-            for (Node<String> node: u.getAdjList()) {
+            for (Node<String> node: graph.getAdjList().get(u)) {
                 Vertex<String> v = node.getVertex();
                 Relaxation.relax(u, v, node.getWeight());
                 if (pq.contains(v)) { // need to reinsert v as v.getD() may have changed.  Ideally we'd use decreaseKey with a binary heap.
@@ -31,12 +31,7 @@ public class Dijkstras {
     }
 
     public static void main(String[] args) {
-        Graph<String> graph = new Graph<>(5);
-        graph.addVertex("s");
-        graph.addVertex("t");
-        graph.addVertex("x");
-        graph.addVertex("y");
-        graph.addVertex("z");
+        Graph<String> graph = new Graph<>();
         graph.addDirectedEdge("s", "t", 10);
         graph.addDirectedEdge("s", "y", 5);
         graph.addDirectedEdge("t", "x", 1);
