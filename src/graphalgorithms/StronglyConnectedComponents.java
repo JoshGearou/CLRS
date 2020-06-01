@@ -41,6 +41,7 @@ public class StronglyConnectedComponents {
 
     }
 
+    // Kosaraju’s algorithm
     public HashMap<Vertex<Integer>, TreeNode<Vertex<Integer>>> findSCCDirectedGraph(Graph<Integer> graph, HashMap<Vertex<Integer>, TreeNode<Vertex<Integer>>> roots, Stack<Vertex<Integer>> stack, HashMap<Vertex<Integer>, Vertex<Integer>> toReversedMap) {
         HashSet<Vertex<Integer>> visited = new HashSet<>();
         while (!stack.isEmpty()) {
