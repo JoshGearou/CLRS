@@ -22,7 +22,8 @@ public class Dijkstras {
             for (Node<String> node: graph.getAdjList().get(u)) {
                 Vertex<String> v = node.getVertex();
                 Relaxation.relax(u, v, node.getWeight());
-                if (pq.contains(v)) { // need to reinsert v as v.getD() may have changed.  Ideally we'd use decreaseKey with a binary heap.
+                // if the heap does not contain v, that means v already has shortest distance from s to v.
+                if (pq.contains(v)) { // need to reinsert v as v.getKey() may have changed.  Ideally we'd use decreaseKey with a binary heap.
                     pq.remove(v);
                     pq.add(v);
                 }

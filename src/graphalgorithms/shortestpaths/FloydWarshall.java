@@ -2,15 +2,15 @@ package graphalgorithms.shortestpaths;
 
 public class FloydWarshall {
 
-    final static int INF = Integer.MAX_VALUE;
+    final static int INF = 9999;
 
     /**
      * Calculates all pairs shortest paths
      * @param graph the graph, where INF is between vertices without edges between them
      * @param v the number of vertices in the graph
      */
-    public void floydWarshall(int[][] graph, int v) {
-        int dist[][] = new int[v][v];
+    public int[][] floydWarshall(int[][] graph, int v) {
+        int[][] dist = new int[v][v];
 
         for (int i=0; i<v; i++) {
             for (int j=0; j<v; j++) {
@@ -27,5 +27,7 @@ public class FloydWarshall {
                 }
             }
         }
+
+        return dist;
     }
 }

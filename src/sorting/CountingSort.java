@@ -1,7 +1,5 @@
 package sorting;
 
-import java.util.Arrays;
-
 // Use counting sort if k=O(n), which means the sort is also O(n).
 public class CountingSort {
     private void countingSort1(int[] data, int k) {

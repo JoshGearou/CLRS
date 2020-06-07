@@ -24,7 +24,7 @@ public class TopologicalSort {
     public static void topologicalSort(Graph<String> graph, Vertex<String> u, Stack<Vertex<String>> stack, Set<Vertex<String>> seen) {
         seen.add(u);
 
-        for (Node<String> node: graph.getAdjList().get(u)) {
+        for (Node<String> node : graph.getAdjList().get(u)) {
             Vertex<String> neighbor = node.getVertex();
             if (!seen.contains(neighbor)) {
                 topologicalSort(graph, neighbor, stack, seen);
