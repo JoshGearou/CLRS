@@ -2,14 +2,13 @@ package sorting;
 
 public class MergeSort {
 
-    int [] data = null;
-    public MergeSort(int [] data) {
-        this.data = data;
+    public void mergeSort(int[] data) {
+        mergeSort(data, 0, data.length-1);
     }
 
     public void mergeSort(int [] data, int s, int e) {
         if (s < e) {
-            int m = (s+e)/2;
+            int m = (e-s)/2 + s;
             mergeSort(data, s, m);
             mergeSort(data, m+1, e);
             merge(data, s,m,e);
