@@ -98,6 +98,7 @@ public class MaxHeap {
     private void increaseKey(int i, int key) {
         if (key < heap.get(i)) {
             System.out.println("new key should be greater than or equal to existing key");
+            return;
         }
         heap.set(i, key);
 
@@ -113,7 +114,13 @@ public class MaxHeap {
         increaseKey(getSize(), key);
     }
 
-    public static void main(String[] args) {
-
+    private void removeKey(int index) {
+        if (index <= 0 || index > getSize()) {
+            System.out.println("not a valid index");
+            return;
+        }
+        swap(index, getSize());
+        setSize(getSize() - 1);
+        maxHeapify(index);
     }
 }

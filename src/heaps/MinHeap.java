@@ -99,6 +99,7 @@ public class MinHeap {
     private void decreaseKey(int i, int key) {
         if (key > heap.get(i)) {
             System.out.println("new key should be less than or equal to existing key");
+            return;
         }
         heap.set(i, key);
         while (i > 1 && heap.get(parent(i)) > heap.get(i)) {
@@ -111,5 +112,15 @@ public class MinHeap {
         heap.add(Integer.MAX_VALUE);
         setSize(getSize()+1);
         decreaseKey(getSize(), key);
+    }
+
+    private void removeKey(int index) {
+        if (index <= 0 || index > getSize()) {
+            System.out.println("not a valid index");
+            return;
+        }
+        swap(index, getSize());
+        setSize(getSize() - 1);
+        minHeapify(index);
     }
 }
