@@ -18,10 +18,9 @@ public class Dijkstras {
             for (Node<String> node: graph.getAdjList().get(u)) {
                 Vertex<String> v = node.getVertex();
                 // if the heap does not contain v, that means v already has shortest distance from s to v.
-                if (!pq.contains(v)) {
-                    continue;
+                if (pq.contains(v)) {
+                    Relaxation.relax(u, v, node.getWeight(), pq);
                 }
-                Relaxation.relax(u, v, node.getWeight(), pq);
             }
         }
     }
