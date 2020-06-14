@@ -5,28 +5,41 @@ import graphalgorithms.Node;
 import graphalgorithms.Vertex;
 import graphalgorithms.VertexKeyComparator;
 
-import java.util.HashSet;
 import java.util.PriorityQueue;
-import java.util.Set;
 
 public class Dijkstras {
 
     public static void dijkstras(Graph<String> graph, Vertex<String> s) {
         Relaxation.initializeSingleSource(graph, s);
-        Set<Vertex<String>> A = new HashSet<>();
-        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(graph.getNumberVertices(), new VertexKeyComparator());
+        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(new VertexKeyComparator());
         pq.addAll(graph.getVertices());
         while (!pq.isEmpty()) {
             Vertex<String> u = pq.poll();
-            A.add(u);
             for (Node<String> node: graph.getAdjList().get(u)) {
                 Vertex<String> v = node.getVertex();
-                Relaxation.relax(u, v, node.getWeight());
                 // if the heap does not contain v, that means v already has shortest distance from s to v.
-                if (pq.contains(v)) { // need to reinsert v as v.getKey() may have changed.  Ideally we'd use decreaseKey with a binary heap.
-                    pq.remove(v);
-                    pq.add(v);
+                if (!pq.contains(v)) {
+                    continue;
                 }
+                Relaxation.relax(u, v, node.getWeight(), pq);
+            }
+        }
+    }
+
+    /**
+     * An alternative version of dijkstras where only the src vertex is put into the pq to begin with.
+     * @param graph The directed graph
+     * @param s The source vertex
+     */
+    public static void dijkstras2(Graph<String> graph, Vertex<String> s) {
+        Relaxation.initializeSingleSource(graph, s);
+        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(new VertexKeyComparator());
+        pq.add(s);
+        while (!pq.isEmpty()) {
+            Vertex<String> u = pq.poll();
+            for (Node<String> node: graph.getAdjList().get(u)) {
+                Vertex<String> v = node.getVertex();
+                Relaxation.relax2(u, v, node.getWeight(), pq);
             }
         }
     }
@@ -45,7 +58,7 @@ public class Dijkstras {
         graph.addDirectedEdge("z", "x", 6);
         dijkstras(graph, graph.getVertices().get(0));
         for (Vertex<String> v: graph.getVertices()) {
-            System.out.println(v.getKey());
+            System.out.println(v.getVal() + " " + v.getKey());
         }
     }
 }
