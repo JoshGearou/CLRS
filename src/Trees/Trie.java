@@ -15,17 +15,15 @@ public class Trie {
      * @param word word to be added
      */
     public void addWord(String word) {
-        Trie currentTrie = this;
-        HashMap<Character, Trie> children = currentTrie.children;
+        Trie trie = this;
         for (int i=0; i<word.length(); i++) {
-            Character currentChar = word.charAt(i);
-            if (!children.containsKey(currentChar)) {
-                children.put(currentChar, new Trie());
+            char currentChar = word.charAt(i);
+            if (!trie.children.containsKey(currentChar)) {
+                trie.children.put(currentChar, new Trie());
             }
-            currentTrie = children.get(currentChar);
-            children = currentTrie.children;
+            trie = trie.children.get(currentChar);
         }
-        currentTrie.isLeaf = true;
+        trie.isLeaf = true;
     }
 
     /**
@@ -34,17 +32,15 @@ public class Trie {
      * @return a boolean indicating whether the trie contains the word
      */
     public boolean containsWord(String word) {
-        Trie currentTrie = this;
-        HashMap<Character, Trie> children = currentTrie.children;
+        Trie trie = this;
         for (int i=0; i<word.length(); i++) {
-            Character currentChar = word.charAt(i);
-            if (!children.containsKey(currentChar)) {
+            char currentChar = word.charAt(i);
+            if (!trie.children.containsKey(currentChar)) {
                 return false;
             }
-            currentTrie = children.get(currentChar);
-            children = currentTrie.children;
+            trie = trie.children.get(currentChar);
         }
-        return currentTrie.isLeaf;
+        return trie.isLeaf;
     }
 
     /**
@@ -53,15 +49,13 @@ public class Trie {
      * @return a boolean indicating whether the trie contains the prefix
      */
     public boolean containsPrefix(String prefix) {
-        Trie currentTrie = this;
-        HashMap<Character, Trie> children = currentTrie.children;
+        Trie trie = this;
         for (int i=0; i<prefix.length(); i++) {
             Character currentChar = prefix.charAt(i);
-            if (!children.containsKey(currentChar)) {
+            if (!trie.children.containsKey(currentChar)) {
                 return false;
             }
-            currentTrie = children.get(currentChar);
-            children = currentTrie.children;
+            trie = trie.children.get(currentChar);
         }
         return true;
     }
