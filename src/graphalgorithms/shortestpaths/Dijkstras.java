@@ -3,23 +3,27 @@ package graphalgorithms.shortestpaths;
 import graphalgorithms.Graph;
 import graphalgorithms.Node;
 import graphalgorithms.Vertex;
-import graphalgorithms.VertexKeyComparator;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class Dijkstras {
 
     public static void dijkstras(Graph<String> graph, Vertex<String> s) {
         Relaxation.initializeSingleSource(graph, s);
-        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(new VertexKeyComparator());
+        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(Comparator.comparingInt(Vertex::getKey));
         pq.addAll(graph.getVertices());
         while (!pq.isEmpty()) {
             Vertex<String> u = pq.poll();
             for (Node<String> node: graph.getAdjList().get(u)) {
                 Vertex<String> v = node.getVertex();
-                // if the heap does not contain v, that means v already has shortest distance from s to v.
+                // if the heap does not contain v, that means v already has the shortest distance from s to v.
                 if (pq.contains(v)) {
-                    Relaxation.relax(u, v, node.getWeight(), pq);
+                    Relaxation.relax(u, v, node.getWeight());
+                    // need to reinsert v as v.getKey() may have changed.  Ideally we'd use
+                    // decreaseKey but Java's pq does not have this operation.
+                    pq.remove(v);
+                    pq.add(v);
                 }
             }
         }
@@ -32,7 +36,7 @@ public class Dijkstras {
      */
     public static void dijkstras2(Graph<String> graph, Vertex<String> s) {
         Relaxation.initializeSingleSource(graph, s);
-        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(new VertexKeyComparator());
+        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(Comparator.comparingInt(Vertex::getKey));
         pq.add(s);
         while (!pq.isEmpty()) {
             Vertex<String> u = pq.poll();

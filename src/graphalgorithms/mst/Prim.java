@@ -1,9 +1,15 @@
 package graphalgorithms.mst;
 
-import graphalgorithms.*;
+import graphalgorithms.Graph;
+import graphalgorithms.Node;
+import graphalgorithms.Vertex;
 import javafx.util.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
+
 
 public class Prim {
 
@@ -14,7 +20,7 @@ public class Prim {
             e.setKey(Integer.MAX_VALUE);
         });
         r.setKey(0);
-        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(graph.getNumberVertices(), new VertexKeyComparator());
+        PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(graph.getNumberVertices(), Comparator.comparingInt(Vertex::getKey));
         pq.addAll(graph.getVertices());
         while (!pq.isEmpty()) {
             Vertex<String> u = pq.poll();
