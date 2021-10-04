@@ -1,9 +1,9 @@
-package graphalgorithms.mst;
+package graphs_generic.mst;
 
 import disjointsets.TreeNode;
-import graphalgorithms.Edge;
-import graphalgorithms.Graph;
-import graphalgorithms.Vertex;
+import graphs_generic.Edge;
+import graphs_generic.Graph;
+import graphs_generic.Vertex;
 
 
 import java.util.*;

@@ -1,8 +1,8 @@
-package graphalgorithms.shortestpaths;
+package graphs_generic.shortestpaths;
 
-import graphalgorithms.Edge;
-import graphalgorithms.Graph;
-import graphalgorithms.Vertex;
+import graphs_generic.Edge;
+import graphs_generic.Graph;
+import graphs_generic.Vertex;
 
 public class BellmanFord {
 

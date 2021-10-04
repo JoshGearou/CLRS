@@ -1,4 +1,4 @@
-package graphalgorithms;
+package graphs_generic;
 
 import java.util.Objects;
 

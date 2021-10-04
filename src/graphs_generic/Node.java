@@ -1,4 +1,4 @@
-package graphalgorithms;
+package graphs_generic;
 
 public class Node<T> {
     Vertex<T> vertex;

@@ -1,4 +1,4 @@
-package graphalgorithms.shortestpaths;
+package graphs_generic.shortestpaths;
 
 public class FloydWarshall {
 

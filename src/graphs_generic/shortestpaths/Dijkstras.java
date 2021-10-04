@@ -1,8 +1,8 @@
-package graphalgorithms.shortestpaths;
+package graphs_generic.shortestpaths;
 
-import graphalgorithms.Graph;
-import graphalgorithms.Node;
-import graphalgorithms.Vertex;
+import graphs_generic.Graph;
+import graphs_generic.Node;
+import graphs_generic.Vertex;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
