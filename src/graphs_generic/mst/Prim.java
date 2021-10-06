@@ -13,13 +13,13 @@ import java.util.PriorityQueue;
 
 public class Prim {
 
-    public List<Pair<Vertex<String>, Vertex<String>>> findMST(Graph<String> graph, Vertex<String> r) {
+    public List<Pair<Vertex<String>, Vertex<String>>> findMST(Graph<String> graph, Vertex<String> start) {
         List<Pair<Vertex<String>, Vertex<String>>> A = new ArrayList<>();
         graph.getVertices().forEach(e -> {
             e.setParent(null);
             e.setKey(Integer.MAX_VALUE);
         });
-        r.setKey(0);
+        start.setKey(0);
         PriorityQueue<Vertex<String>> pq = new PriorityQueue<>(graph.getNumberVertices(), Comparator.comparingInt(Vertex::getKey));
         pq.addAll(graph.getVertices());
         while (!pq.isEmpty()) {

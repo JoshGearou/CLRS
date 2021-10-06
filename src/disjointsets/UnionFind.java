@@ -12,26 +12,27 @@ public class UnionFind {
         }
     }
 
-    private int union(int firstSetElement, int secondSetElement) {
+    public int union(int firstSetElement, int secondSetElement) {
         return link(findSet(firstSetElement), findSet(secondSetElement));
     }
 
-    private int findSet(int element) {
+    public int findSet(int element) {
         if (parent[element] != element) {
             parent[element] = findSet(parent[element]);
         }
         return parent[element];
     }
 
-    private int link(int firstSetElement, int secondSetElement) {
-        if (rank[firstSetElement] > rank[secondSetElement]) {
-            parent[secondSetElement] = firstSetElement;
+    private int link(int first, int second) {
+        if (rank[first] > rank[second]) {
+            parent[second] = first;
+            return first;
         } else {
-            if (rank[firstSetElement] == rank[secondSetElement]) {
-                rank[firstSetElement]++;
+            if (rank[first] == rank[second]) {
+                rank[first]++;
             }
-            parent[secondSetElement] = firstSetElement;
+            parent[first] = second;
+            return second;
         }
-        return firstSetElement;
     }
 }
