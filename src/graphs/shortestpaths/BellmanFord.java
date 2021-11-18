@@ -4,10 +4,11 @@ import java.util.Arrays;
 
 public class BellmanFord {
 
-    private int[] bellmanFord(int[][][] adj) {
+    private int[] bellmanFord(int[][][] adj, int src) {
         int n = adj.length;
         int[] dist = new int[n];
         Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
 
         for (int i=0; i<n-1; i++) {
             for (int u=0; u<n; u++) {
@@ -15,7 +16,9 @@ public class BellmanFord {
                     int[] vertex = adj[u][j];
                     int v = vertex[0];
                     int weight = vertex[1];
-                    dist[v] = Math.min(dist[u] + weight, dist[v]);
+                    if (dist[u] != Integer.MAX_VALUE && dist[u] + weight < dist[v] {
+                        dist[v] = Math.min(dist[u] + weight, dist[v]);
+                    }
                 }
             }
         }
