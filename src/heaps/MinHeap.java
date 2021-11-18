@@ -28,11 +28,11 @@ public class MinHeap {
         int right = right(i);
         int smallest = i;
 
-        if (left <=size && heap.get(left) < heap.get(i)) {
+        if (left <=size && heap.get(left) < heap.get(smallest)) {
             smallest = left;
         }
 
-        if (right <= size && heap.get(right) < heap.get(i)) {
+        if (right <= size && heap.get(right) < heap.get(smallest)) {
             smallest = right;
         }
 
