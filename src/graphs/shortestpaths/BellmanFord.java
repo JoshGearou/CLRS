@@ -17,7 +17,7 @@ public class BellmanFord {
                     int v = vertex[0];
                     int weight = vertex[1];
                     if (dist[u] != Integer.MAX_VALUE && dist[u] + weight < dist[v] {
-                        dist[v] = Math.min(dist[u] + weight, dist[v]);
+                        dist[v] = dist[u] + weight;
                     }
                 }
             }
