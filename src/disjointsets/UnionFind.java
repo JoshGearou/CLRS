@@ -29,7 +29,7 @@ public class UnionFind {
             return first;
         } else {
             if (rank[first] == rank[second]) {
-                rank[first]++;
+                rank[second]++;
             }
             parent[first] = second;
             return second;
